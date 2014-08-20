@@ -6,3 +6,5 @@ Branch of TodoList for Activity/Carb and Insulin registration on mobile for use 
 With addition of the jQuery Datetime javascript for use of correct time input taken from this site: http://keith-wood.name/datetimeEntry.html
 
 Based on the TodoList Node.js, Express.js, Mongodb, Jade and jQuery Mobile Example
+
+<img src="https://github.com/Lytrix/todolist/blob/activity-carb-log/screenshot.png" /img>
