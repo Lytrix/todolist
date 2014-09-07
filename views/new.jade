@@ -4,24 +4,63 @@
 extends layout
 block content
     h2= title
-        form( method="post", data-ajax="false", action="/save")
+        form( method="post", data-ajax="false", action="/save" )
             ul(data-role="listview", data-inset="true")
+                // EVENT DATE
                 li(data-role="fieldcontain")
-                    label(for="subject") Betreff
-                    input(id="subject", type="text", name="subject", maxlength="150")
+                    label(for="eventDate") Date
+                    input(data-mini="true" data-clear-btn="false" type="date" id="eventDate" name="eventDate" style="height: 20px")
+
+                // EVENT TIME
                 li(data-role="fieldcontain")
-                    label(for="date") Datum
-                    input(id="datetime", type="datetime-local", data-role="date", name="datetime")
+                    label(for="eventTime") Time
+                    input(data-mini="true" data-clear-btn="false" type="time" id="eventTime" name="eventTime")
+               
+                // PLANNED ACTIVITY
                 li(data-role="fieldcontain")
-                    label(for="note") Notiz
-                    textarea(name="note",cols="40", rows="8", id="note")
+                    label(for="activityTime") Activity
+                    input(data-mini="true" data-clear-btn="false" name="activityTime" id="activityTime" type="time")      
+                    label(for="activityType")
+                    select(id="activityType" data-native-menu="false" data-mini="true")                    
+                        each activitytype in selectboxes[2].activitytypes
+                            option(value="#{activitytype}") #{activitytype}
+                   
+                // FOOD
                 li(data-role="fieldcontain")
-                    label(for="who") Wer
-                    input(id="who", type="text", name="who", maxlength="150")
+                    label(for="carbGrams") Food Carbs 
+                    input(data-mini="true" data-clear-btn="true" name="carbGrams" id="carbGrams" placeholder="15 grams"  type="number") 
+                    label(for="carbTypes")
+                    select(id="carbTypes" name="carbTypes" data-native-menu="false" data-mini="true")
+                         each carbtype in selectboxes[1].carbtypes
+                            option(value="#{carbtype}") #{carbtype}
+                       
+                        
+                // INSULIN UNITS
                 li(data-role="fieldcontain")
-                    label(for="category") Kategorie
-                    select(id="category", name="category", data-inline="true", data-native-menu="false" )
-                        each item in categories
-                            option(value="#{item.name}") #{item.name}
-            input(type="submit", value="Speichern", data-icon="check", data-inline="true")
-            a(href="/home", data-role="button", data-icon="back",data-rel="back", data-inline="true") zurück
+                   label(for="insulinUnits") Insulin Units
+                   input(data-mini="true" data-clear-btn="true" name="insulinUnits" id="insulinUnits" placeholder="12 units" type="number")
+ 
+                // Special
+                li(data-role="fieldcontain")
+                    label(for="eventTypes")  Correction
+                    select(id="eventTypes" name="eventTypes" data-native-menu="false" data-mini="true")
+                        each eventtype in selectboxes[0].eventtypes
+                            option(value="#{eventtype}") #{eventtype}
+
+
+                            //   option(selected="selected" value="") None
+                       // option(value="Breakfast") Period
+                //        option(value="Sick/Medicine") Sick/Medicine
+                  //      option(value="Alcohol") Alcohol
+                    //    option(value="Stress") Stress
+                      //  option(value="Very warm weather") Very warm weather
+                      
+                // Notes
+                li(data-role="fieldcontain")
+                    label(for="note") Note
+                    textarea(name="note", id="note" placeholder="Type additional information...") 
+                      
+                      
+
+            input(type="submit", value="Add", data-icon="check", data-inline="true")
+            a(href="/home", data-role="button", data-icon="back",data-rel="back", data-inline="true") Cancel

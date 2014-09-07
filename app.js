@@ -4,6 +4,7 @@
 
 // Module
 var express = require('express');
+var path = require('path');
 var app = express();
 var routes = require('./routes');
 var http = require('http');
@@ -15,8 +16,10 @@ var methodOverride = require('method-override');
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-
-app.use(bodyParser.urlencoded());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());         // pull information from html in POST
 app.use(methodOverride());          // simulate DELETE and PUT
 
@@ -40,7 +43,7 @@ app.post('/remove/:id', routes.remove);
 
 // Server
 http.createServer(app).listen(app.get('port'), function(){
-    console.log('App läuft auf Port '+ app.get('port'));
+    console.log('App running on port '+ app.get('port'));
     console.log('URL: http://localhost:'+ app.get('port'));
 
 });

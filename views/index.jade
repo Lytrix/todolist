@@ -9,13 +9,29 @@ block content
         - each action in actions
             li(id=action._id)
                 a(href="/edit/#{action._id}")
-                    h3= action.subject
-                    p
-                        span= action.who
-                        span , &nbsp
-                        span= action.category
-                        span , &nbsp
-                    p=  action.note
+                    h3= action.eventTime
+                      &nbsp
+                      = action.eventDate
+                    table
+                        thead
+                            tr
+                                td
+                                    = action.insulinUnits
+                                    &nbspmmol/ml
+                                td
+                                    = action.carbGrams
+                                    &nbspGrams
+                                td
+                                    Type
+                        tbody 
+                            tr 
+                                td
+                                    = action.insulinType
+                                td
+                                    = action.carbTypes
+                                td
+                                    = action.eventTypes
+                    
                     p(class="ui-li-aside")
-                        strong= action.datetime
-                    a(href="/delete/#{action._id}",data-theme="a", data-icon="delete") Löschen
+                        
+                    a(href="/delete/#{action._id}",data-theme="a", data-icon="delete") Remove

@@ -5,27 +5,30 @@
 
 // Database mongodb
 // mongod muss vorher in der Console oder als Service gestartet sein
-var databaseUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "mongodb://localhost";
+var databaseUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || "mongodb://localhost:27017/todolist";
 // var databaseUrl = "todolist"; // optional: "username:password@localhost/todolist"
-var collections = ["actions", "categories"]
+var collections = ["actions", "selectboxes"]
 var db = require("mongojs").connect(databaseUrl, collections);
-
-//  Falls noch keine collection categories existiert, wird automatisch eine angelegt
-db.categories.find().sort({name:1}, function(error, categories) {
-    if (error || !categories) {
+//  Falls noch keine collection selectboxes existiert, wird automatisch eine angelegt
+db.selectboxes.find().sort({name:1}, function(error, selectboxes) {
+    if (error || !selectboxes) {
         console.log(error);
     } else {
-        if (categories.length != 0) {
-            console.log(categories.length + ' categories found');
+        if (selectboxes.length != 0) {
+            console.log(selectboxes.length + ' selectboxes found');
         } else {
-            defaultCategories = [{'name':'Büro'},{'name':'Rückruf'}, {'name':'Petra'}];
+            defaultselectboxes = [
+            	{"eventtypes":["Regular Event","Too low glucose","Too high glucose","Sick/Medicine","Alcohol","Stress","Very warm weather", "Bad Weather"]},
+	            {"carbtypes":["Snack","Low Sugar Correction","Breakfast","Lunch","Dinner"]},
+	            {"activitytypes":["Normal","Medium","Intensive!"]}]
+            ;
 
-            db.categories.insert(defaultCategories,
+            db.selectboxes.insert(defaultselectboxes,
                 function(error){
                     if (error) {
                         console.log(error);
                     } else {
-                        console.log(defaultCategories.length + ' categories created');
+                        console.log(defaultselectboxes.length + ' selectboxes created');
                     }
                 });
         }
@@ -33,40 +36,42 @@ db.categories.find().sort({name:1}, function(error, categories) {
 });
 
 
-// Formular Startseite index.jade aufrufen
+// Formular Startseite index aufrufen
 exports.index = function(req, res){
-    db.actions.find({status: "aktiv"}, function(error, actions) {
+    db.actions.find({status: "acive"}, function(error, actions) {
         if (error || !actions) {
             console.log("No active actions found");
-            res.render('index', { title: 'Todo Home', actions: null});
+            res.render(' 	', { title: 'Treatments', actions: null});
         } else {
-            res.render('index', { title: 'Todo Home', actions: actions });
+            res.render('index', { title: 'Treatments', actions: actions });
         }
     });
 };
 
 // Formular new.jade aufrufen
 exports.new = function(req, res){
-    db.categories.find().sort({name:1}, function(error, categories) {
-        if (error || !categories) {
-            console.log("No Collection *categories* found!")
+    //db.selectboxes.remove({});
+    db.selectboxes.find().sort({}, function(error, data) {
+        if (error || !data) {
+            console.log("No Collection *selectboxes* found!")
         } else {
-            res.render('new', { title: 'Todo Neu', categories: categories });
+        	console.log(data[0])
+            res.render('new', { title: 'Add Treatment', selectboxes: data });
         }
     });
 };
 
 // Formular edit.jade aufrufen
 exports.edit = function(req, res){
-    db.categories.find().sort({name:1}, function(error, categories) {
-        if (error || !categories) {
-            console.log("No Collection *categories* found!")
+    db.selectboxes.find().sort({name:1}, function(error, selectboxes) {
+        if (error || !selectboxes) {
+            console.log("No Collection *selectboxes* found!")
         } else {
             db.actions.findOne({"_id": db.ObjectId(req.params.id)}, function (error, action) {
                 if (error || !action) {
                     console.log("ID not found");
                 } else {
-                    res.render('edit', { title: 'Todo Bearbeiten', action: action, categories: categories });
+                    res.render('edit', { title: 'Modify Event', action: action, selectboxes: selectboxes });
                 }
             });
         }
@@ -80,7 +85,7 @@ exports.delete = function(req, res){
             console.log("ID not found");
         } else {
             // Abfrage ob wirklich gelöscht werden soll
-            res.render('delete', { title: 'Todo Löschen', action: action });
+            res.render('delete', { title: 'Remove Event', action: action });
         }
     });
 };
@@ -134,9 +139,11 @@ exports.done = function(req, res) {
         if (error) {
             console.log("ID not found");
         } else {
-            db.actions.update   ( { _id: _id }, { $set: { status: "erledigt" }});
+            db.actions.update   ( { _id: _id }, { $set: { status: "Removed" }});
             res.redirect("/home");
         }
     });
 
 };
+
+

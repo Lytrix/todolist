@@ -28,3 +28,11 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# data store
+data/journal
+data/local.0
+data/local.ns
+data/mongod.lock
+data/todolist.0
+data/todolist.ns
