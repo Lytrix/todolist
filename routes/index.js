@@ -38,12 +38,12 @@ db.selectboxes.find().sort({name:1}, function(error, selectboxes) {
 
 // Formular Startseite index aufrufen
 exports.index = function(req, res){
-    db.actions.find({status: "acive"}, function(error, actions) {
+    db.actions.find({status: "aktiv"}, function(error, actions) {
         if (error || !actions) {
-            console.log("No active actions found");
+            console.log("No treatments found, fill in a first treatment!");
             res.render(' 	', { title: 'Treatments', actions: null});
         } else {
-            res.render('index', { title: 'Treatments', actions: actions });
+            res.render('index', { title: 'Treatments', actions: actions.sort(actions.eventDate).reverse() });
         }
     });
 };

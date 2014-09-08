@@ -3,12 +3,16 @@
 
 extends layout
 block content
-    h3 Datensatz wirklich löschen?
+    h3 Do you really want to remove this item?
     form( method="post", data-ajax="false", action="/remove/#{action._id}")
-        p= action.subject
-        p= action.created
-        p= action.who
-        p= action.category
+        p= action.eventType
+        p= action.carbGrams
+        p= action.carbTypes
+        p= action.insulinUnits
+        p= action.insulinType
+        p= action.eventDate
+        p= action.eventTime
+        p= action.note
         br
         input(type="submit", value="Remove", data-icon="delete", data-inline="true")
         a(href="/home", data-role="button", data-icon="back", data-rel="back", data-inline="true") Back

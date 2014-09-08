@@ -1,5 +1,10 @@
 // http://keith-wood.name/datetimeEntry.html
 
+
+
+
+
+
 // Datetimeentry
 $(function eventDate() {
 	// Day's short with number Month full Year and 24H
@@ -7,6 +12,7 @@ $(function eventDate() {
 	$('#eventDate').datetimeEntry({datetimeFormat: ('W'+", "+'N'+' Y'), spinnerImage: ''});
 	$('#eventDate').datetimeEntry('getDatetime');
 	$('#eventDate').datetimeEntry('setDatetime');
+
 
 		
 	$('#eventTime').datetimeEntry({datetimeFormat: 'H:M',initialField:1, timeSteps: [1, 5, 0],spinnerImage: ''});

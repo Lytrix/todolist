@@ -4,33 +4,44 @@
 // Startseite
 extends layout
 block content
-    h2= title
+    // h2= title
     ul#actions(data-role="listview",data-filter="true", data-filter-placeholder="Filter", data-inset="true")
         - each action in actions
             li(id=action._id)
                 a(href="/edit/#{action._id}")
                     h3= action.eventTime
                       &nbsp
-                      = action.eventDate
+                      = moment(action.eventDate).format("dddd[,] ll")
                     table
                         thead
                             tr
-                                td
-                                    = action.insulinUnits
-                                    &nbspmmol/ml
-                                td
-                                    = action.carbGrams
-                                    &nbspGrams
-                                td
-                                    Type
-                        tbody 
+                                if action.insulinUnits
+                                    td
+                                        = action.insulinUnits
+                                        &nbspmmol/ml
+                                if action.insulinUnits
+                                    td
+                                        = action.carbGrams
+                                        &nbspGrams
+                                if action.eventTypes
+                                    td
+                                        Type
+                               
                             tr 
-                                td
-                                    = action.insulinType
-                                td
-                                    = action.carbTypes
-                                td
-                                    = action.eventTypes
+                                if action.insulinType
+                                    td
+                                        = action.insulinType
+                                if action.carbTypes
+                                    td
+                                        = action.carbTypes
+                                if action.eventTypes
+                                    td
+                                        = action.eventTypes
+                            tr  
+                                if action.note
+                                    td(colspan=3)
+                                        = action.note
+                            
                     
                     p(class="ui-li-aside")
                         

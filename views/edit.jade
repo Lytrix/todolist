@@ -6,25 +6,55 @@ block content
     h2= title
         form(method="post", data-ajax="false", action="/save/#{action._id}")
             // Button zum setzen des Status auf erledigt
-            a(href="/done/#{action._id}", data-role="button", data-icon="check", data-inline="true") ToDo erledigt
+            // a(href="/done/#{action._id}", data-role="button", data-icon="check", data-inline="true") Reset/Empty Treatment
             // Listview
             ul(data-role="listview", data-inset="true")
+                // EVENT DATE
                 li(data-role="fieldcontain")
-                    label(for="subject") Betreff
-                    input(id="subject", type="text", name="subject", maxlength="150", value=action.subject)
+                    label(for="eventDate") Date
+                    input(data-mini="true" data-clear-btn="false" type="date" id="eventDate" name="eventDate" value=action.eventDate style="height: 20px")
+
+                // EVENT TIME
                 li(data-role="fieldcontain")
-                    label(for="date") Datum
-                    input(id="date", type="datetime-local", name="datetime", maxlength="10", value=action.datetime)
+                    label(for="eventTime") Time
+                    input(data-mini="true" data-clear-btn="false" type="time" id="eventTime" value=action.eventTime name="eventTime")
+               
+                // PLANNED ACTIVITY
                 li(data-role="fieldcontain")
-                    label(for="note") Notiz
-                    textarea(name="note", id="note") #{action.note}
+                    label(for="activityTime") Activity
+                    input(data-mini="true" data-clear-btn="false" name="activityTime" id="activityTime" value=action.activityTime type="time")      
+                    label(for="activityType")
+                    select(id="activityType" data-native-menu="false" data-mini="true")                    
+                        option(value="") QuickSelect 
+                        each activitytype in selectboxes[2].activitytypes
+                            option(value="#{activitytype}", selected=activitytype==action.activityType) #{activitytype}
+                // FOOD
                 li(data-role="fieldcontain")
-                    label(for="who") Wer
-                    input(id="who", type="text", name="who", maxlength="150", value=action.who)
+                    label(for="carbGrams") Food Carbs 
+                    input(data-mini="true" data-clear-btn="true" name="carbGrams" id="carbGrams" placeholder="15 grams" value=action.carbGrams type="number") 
+                    label(for="carbTypes")
+                    select(id="carbTypes" name="carbTypes" data-native-menu="false" data-mini="true")
+                         option(value="") QuickSelect 
+                         each carbtype in selectboxes[1].carbtypes
+                            option(value="#{carbtype}", selected=carbtype==action.carbTypes) #{carbtype}
+
+                        
+                // INSULIN UNITS
                 li(data-role="fieldcontain")
-                    label(for="category") Kategorie
-                    select(id="category", name="category", data-inline="true", data-native-menu="false")
-                        each item in categories
-                           option(value="#{item.name}", selected=item.name==action.category) #{item.name}
-            input(type="submit", value="Speichern", data-icon="check", data-inline="true")
-            a(href="/home", data-role="button", data-icon="back",data-rel="back", data-inline="true") zurück
+                   label(for="insulinUnits") Insulin Units
+                   input(data-mini="true" data-clear-btn="true" name="insulinUnits" id="insulinUnits" placeholder="12 units" value=action.insulinUnits type="number")
+ 
+                // Special
+                li(data-role="fieldcontain")
+                    label(for="eventTypes")  Correction
+                    select(id="eventTypes" name="eventTypes" data-native-menu="false" data-mini="true")
+                        option(value="") QuickSelect 
+                        each eventtype in selectboxes[0].eventtypes
+                            option(value="#{eventtype}", selected=eventtype==action.eventTypes) #{eventtype}
+
+                // Notes
+                li(data-role="fieldcontain")
+                    label(for="note") Note
+                    textarea(name="note", id="note") #{action.note} 
+            input(type="submit", value="Replace", data-icon="check", data-inline="true")
+            a(href="/home", data-role="button", data-icon="back",data-rel="back", data-inline="true") Back

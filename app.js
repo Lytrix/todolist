@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
 
+
 // Settings
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -22,6 +23,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());         // pull information from html in POST
 app.use(methodOverride());          // simulate DELETE and PUT
+app.locals._      = require('underscore');
+app.locals._.str  = require('underscore.string');
+app.locals.moment = require('moment');
+
 
 var env = process.env.NODE_ENV || 'development';
 if ('development' == env) {

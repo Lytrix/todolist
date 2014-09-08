@@ -1,7 +1,7 @@
 {
-    "name": "todolist",
-    "description": "Todolist",
-    "version": "0.9.1",
+    "name": "ActivityInsulinCarbLog",
+    "description": "Activity Insulin Carb Log",
+    "version": "0.1.1",
     "private": true,
     "scripts": {
         "start": "node app.js"
@@ -14,6 +14,9 @@
         "jade": "*",
         "mongodb": "*",
         "mongojs": "*",
-        "morgan": "*"
+        "morgan": "*",
+        "underscore":"*",
+        "underscore.string":"*",
+        "moment":"*"
     }
 }

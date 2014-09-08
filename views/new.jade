@@ -1,9 +1,10 @@
 //
    Created by awunnenb on 27.11.13.
 
+
 extends layout
 block content
-    h2= title
+        // p #{moment().format('MM/DD/YYYY')}
         form( method="post", data-ajax="false", action="/save" )
             ul(data-role="listview", data-inset="true")
                 // EVENT DATE
@@ -22,6 +23,7 @@ block content
                     input(data-mini="true" data-clear-btn="false" name="activityTime" id="activityTime" type="time")      
                     label(for="activityType")
                     select(id="activityType" data-native-menu="false" data-mini="true")                    
+                        option(selected="selected" value="") QuickSelect 
                         each activitytype in selectboxes[2].activitytypes
                             option(value="#{activitytype}") #{activitytype}
                    
@@ -31,6 +33,7 @@ block content
                     input(data-mini="true" data-clear-btn="true" name="carbGrams" id="carbGrams" placeholder="15 grams"  type="number") 
                     label(for="carbTypes")
                     select(id="carbTypes" name="carbTypes" data-native-menu="false" data-mini="true")
+                         option(selected="selected" value="") QuickSelect 
                          each carbtype in selectboxes[1].carbtypes
                             option(value="#{carbtype}") #{carbtype}
                        
@@ -44,21 +47,14 @@ block content
                 li(data-role="fieldcontain")
                     label(for="eventTypes")  Correction
                     select(id="eventTypes" name="eventTypes" data-native-menu="false" data-mini="true")
+                        option(selected="selected" value="") QuickSelect 
                         each eventtype in selectboxes[0].eventtypes
                             option(value="#{eventtype}") #{eventtype}
 
-
-                            //   option(selected="selected" value="") None
-                       // option(value="Breakfast") Period
-                //        option(value="Sick/Medicine") Sick/Medicine
-                  //      option(value="Alcohol") Alcohol
-                    //    option(value="Stress") Stress
-                      //  option(value="Very warm weather") Very warm weather
-                      
                 // Notes
                 li(data-role="fieldcontain")
                     label(for="note") Note
-                    textarea(name="note", id="note" placeholder="Type additional information...") 
+                    textarea(name="note", id="note") 
                       
                       
 
